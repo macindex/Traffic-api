@@ -1,4 +1,4 @@
-package com.project.traffic.traffic_api;
+package com.project.traffic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
