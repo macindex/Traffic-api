@@ -1,23 +1,26 @@
 package com.project.traffic.api.controller;
 
 import com.project.traffic.domain.model.Owner;
+import com.project.traffic.domain.repository.OwnerRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 public class OwnerController {
 
-    @PersistenceContext
-    private EntityManager manager;
+    private final OwnerRepository ownerRepository;
 
     @GetMapping("/owners")
     public List<Owner> listar(){
-        return manager.createQuery("from Owner", Owner.class).getResultList();
+        return ownerRepository.findAll();
 
 //        var owner1 = new Owner();
 //        owner1.setId(1L);
