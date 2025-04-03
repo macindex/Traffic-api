@@ -16,8 +16,8 @@ public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
-    private String email;
+    private String name;
+    private String mail;
     @Column(name = "celphone")
     private String telefone;
 
