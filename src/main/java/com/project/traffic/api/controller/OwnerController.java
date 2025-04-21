@@ -18,6 +18,10 @@ public class OwnerController {
 
     private final OwnerRepository ownerRepository;
 
+//    public OwnerController(OwnerRepository ownerRepository){
+//        this.ownerRepository = ownerRepository;
+//    }
+
     @GetMapping("/owners")
     public List<Owner> listar(){
         return ownerRepository.findAll();
