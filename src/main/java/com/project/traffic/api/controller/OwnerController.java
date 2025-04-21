@@ -24,7 +24,9 @@ public class OwnerController {
 
     @GetMapping("/owners")
     public List<Owner> listar(){
-        return ownerRepository.findAll();
+//        return ownerRepository.findByNome("Carlos andrade");
+        return ownerRepository.findByNameContaining("and");
+
 
 //        var owner1 = new Owner();
 //        owner1.setId(1L);
