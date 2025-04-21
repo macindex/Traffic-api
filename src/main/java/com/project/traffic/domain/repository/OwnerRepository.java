@@ -12,5 +12,5 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
 //    List<Owner> findByNameContaining(String name);
 //    List<Owner> findById(Long OwnerId)
 
-    Optional<Owner> findbyId(Long ownerId);
+    Optional<Owner> findById(Long ownerId);
 }
