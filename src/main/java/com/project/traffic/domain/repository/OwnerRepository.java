@@ -1,6 +1,7 @@
 package com.project.traffic.domain.repository;
 
 import com.project.traffic.domain.model.Owner;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

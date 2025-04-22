@@ -50,4 +50,13 @@ public class OwnerController {
 
         return ResponseEntity.ok(ownerUpdated);
     }
+    @DeleteMapping("/{ownerId}")
+    public ResponseEntity<Object> remove(@PathVariable Long ownerId) {
+        return ownerRepository.findById(ownerId)
+                .map(owner -> {
+                    ownerRepository.delete(owner);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
