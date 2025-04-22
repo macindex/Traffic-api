@@ -2,6 +2,7 @@ package com.project.traffic.api.controller;
 
 import com.project.traffic.domain.model.Owner;
 import com.project.traffic.domain.repository.OwnerRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class OwnerController {
 //    }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Owner add(@RequestBody Owner owner){
+    public Owner add(@Valid @RequestBody Owner owner){
         return ownerRepository.save(owner);
     }
     @PutMapping("/{ownerId}")
