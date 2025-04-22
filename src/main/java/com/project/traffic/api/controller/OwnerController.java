@@ -40,4 +40,14 @@ public class OwnerController {
     public Owner add(@RequestBody Owner owner){
         return ownerRepository.save(owner);
     }
+    @PutMapping("/{ownerId}")
+    public ResponseEntity<Owner> update(@PathVariable Long ownerId, @RequestBody Owner owner) {
+        if (!ownerRepository.existsById(ownerId)) {
+            return ResponseEntity.notFound().build();
+        }
+        owner.setId(ownerId);
+        Owner ownerUpdated = ownerRepository.save(owner);
+
+        return ResponseEntity.ok(ownerUpdated);
+    }
 }
