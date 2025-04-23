@@ -2,6 +2,7 @@ package com.project.traffic.api.controller;
 
 import com.project.traffic.domain.model.Owner;
 import com.project.traffic.domain.repository.OwnerRepository;
+import com.project.traffic.domain.service.RegisterOwnerService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/owners")
 public class OwnerController {
+    private final RegisterOwnerService registerOwnerService;
 
     private final OwnerRepository ownerRepository;
 
@@ -39,7 +41,7 @@ public class OwnerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Owner add(@Valid @RequestBody Owner owner){
-        return ownerRepository.save(owner);
+        return registerOwnerService.save(owner);
     }
     @PutMapping("/{ownerId}")
     public ResponseEntity<Owner> update(@PathVariable Long ownerId, @RequestBody Owner owner) {
@@ -47,7 +49,7 @@ public class OwnerController {
             return ResponseEntity.notFound().build();
         }
         owner.setId(ownerId);
-        Owner ownerUpdated = ownerRepository.save(owner);
+        Owner ownerUpdated = registerOwnerService.save(owner);
 
         return ResponseEntity.ok(ownerUpdated);
     }
@@ -55,7 +57,7 @@ public class OwnerController {
     public ResponseEntity<Object> remove(@PathVariable Long ownerId) {
         return ownerRepository.findById(ownerId)
                 .map(owner -> {
-                    ownerRepository.delete(owner);
+                    registerOwnerService.delete(ownerId);
                     return ResponseEntity.noContent().build();
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());

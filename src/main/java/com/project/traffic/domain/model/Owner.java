@@ -23,7 +23,7 @@ public class Owner {
     @NotBlank
     @Size(max = 20)
     private String mail;
-    
+
     @Column(name = "celphone")
     private String telefone;
 
