@@ -14,4 +14,5 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
 //    List<Owner> findById(Long OwnerId)
 
     Optional<Owner> findById(Long ownerId);
+    Optional<Owner> findByMail(String mail);
 }
