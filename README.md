@@ -10,7 +10,7 @@ Bem-vindo(a) a este projeto que tem como objetivo ensinar e demonstrar, na prát
 Antes de tudo, é importante entender como o desenvolvimento de APIs REST se tornou uma habilidade essencial no mercado atual — e como dominá-la pode alavancar sua carreira.
 
 ### 🧑‍💻 Quem é você? Quem sou eu?
-Conheça os envolvidos neste projeto. Aqui, compartilhamos nossas experiências e propósitos com este material.
+Sou Claudio e criei esse projeto com o intuito reunir um pouco de tudo que o Spring tem a nos fornecer, claro que é uma parte do que a linguagem tem a nos proporcionar, mas vou tentar ao longo do tempo atualizar este repositório para agregar mais conhecimento dentro deste material.
 
 ### 🤝 Alguns combinados antes de continuar
 Vamos alinhar expectativas e boas práticas para tirar o melhor proveito do projeto!
