@@ -1,5 +1,6 @@
 package com.project.traffic.api.controller;
 
+import com.project.traffic.domain.exception.BusinessException;
 import com.project.traffic.domain.model.Owner;
 import com.project.traffic.domain.repository.OwnerRepository;
 import com.project.traffic.domain.service.RegisterOwnerService;
@@ -61,5 +62,9 @@ public class OwnerController {
                     return ResponseEntity.noContent().build();
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<String> capt(BusinessException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
