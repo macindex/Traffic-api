@@ -12,6 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegisterOwnerService {
 
     private final OwnerRepository ownerRepository;
+
+    public Owner search(Long ownerId){
+        return ownerRepository.findById(ownerId).orElseThrow(() -> new BusinessException("Owner not found!"));
+    }
+
     @Transactional
     public Owner save(Owner owner){
         boolean mailUsed = ownerRepository.findByMail(owner.getMail()).filter(p -> !p.equals(owner)).isPresent();

@@ -1,5 +1,6 @@
 package com.project.traffic.api.controller;
 
+import com.project.traffic.domain.exception.BusinessException;
 import com.project.traffic.domain.model.Vehicle;
 import com.project.traffic.domain.repository.VehicleRepository;
 import com.project.traffic.domain.service.RegisterVehicleService;
@@ -31,6 +32,10 @@ public class VehicleController {
     @ResponseStatus(HttpStatus.CREATED)
     public Vehicle register(@RequestBody Vehicle vehicle){
         return registerVehicleService.register(vehicle);
+    }
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<String> capt(BusinessException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
 }
