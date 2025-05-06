@@ -1,5 +1,6 @@
 package com.project.traffic.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,9 +22,12 @@ public class Vehicle {
     private String brand;
     private String model;
     private String plate;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     private StatusVehicle status;
-
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime dateRegister;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime dateSeizure;
 }

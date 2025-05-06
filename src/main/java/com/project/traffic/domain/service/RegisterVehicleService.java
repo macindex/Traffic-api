@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class RegisterVehicleService {
 
     private final VehicleRepository vehicleRepository;
-//    private final OwnerRepository ownerRepository;
     private final RegisterOwnerService registerOwnerService;
 
 //    @Autowired
