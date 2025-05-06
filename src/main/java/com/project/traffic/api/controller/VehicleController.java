@@ -4,6 +4,7 @@ import com.project.traffic.domain.exception.BusinessException;
 import com.project.traffic.domain.model.Vehicle;
 import com.project.traffic.domain.repository.VehicleRepository;
 import com.project.traffic.domain.service.RegisterVehicleService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class VehicleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Vehicle register(@RequestBody Vehicle vehicle){
+    public Vehicle register(@Valid @RequestBody Vehicle vehicle){
         return registerVehicleService.register(vehicle);
     }
     @ExceptionHandler(BusinessException.class)
