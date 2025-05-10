@@ -63,8 +63,4 @@ public class OwnerController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<String> capt(BusinessException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
 }

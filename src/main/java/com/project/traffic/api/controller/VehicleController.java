@@ -34,9 +34,4 @@ public class VehicleController {
     public Vehicle register(@Valid @RequestBody Vehicle vehicle){
         return registerVehicleService.register(vehicle);
     }
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<String> capt(BusinessException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
-
 }
