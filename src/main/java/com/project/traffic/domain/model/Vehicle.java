@@ -1,11 +1,14 @@
 package com.project.traffic.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.traffic.domain.validation.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +24,7 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Valid
+    @ConvertGroup(from = Default.class, to = ValidationGroups.OwnerId.class)
     @ManyToOne
 //    @JoinColumn(name = "owner_id")
     @NotNull

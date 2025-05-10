@@ -1,7 +1,9 @@
 package com.project.traffic.domain.model;
 
+import com.project.traffic.domain.validation.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,7 +19,7 @@ public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotNull(groups = ValidationGroups.OwnerId.class)
     @Size(max = 60)
     private String name;
     @NotBlank
