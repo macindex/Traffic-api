@@ -21,6 +21,7 @@ public class Owner {
     private Long id;
     @NotNull(groups = ValidationGroups.OwnerId.class)
     @Size(max = 60)
+    @NotBlank
     private String name;
     @NotBlank
     @Size(max = 20)
