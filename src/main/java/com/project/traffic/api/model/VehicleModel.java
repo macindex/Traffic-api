@@ -14,7 +14,7 @@ public class VehicleModel {
     private String nameOwner;
     private String brand;
     private String model;
-    private String plate;
+    private String numPlate;
     private StatusVehicle status;
     private OffsetDateTime dateRegister;
     private OffsetDateTime dateSeizure;
