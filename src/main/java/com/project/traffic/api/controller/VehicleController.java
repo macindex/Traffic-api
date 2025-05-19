@@ -1,5 +1,6 @@
 package com.project.traffic.api.controller;
 
+import com.project.traffic.api.model.VehicleModel;
 import com.project.traffic.domain.exception.BusinessException;
 import com.project.traffic.domain.model.Vehicle;
 import com.project.traffic.domain.repository.VehicleRepository;
@@ -25,8 +26,21 @@ public class VehicleController {
         return vehicleRepository.findAll();
     }
     @GetMapping("/{vehicleId}")
-    public ResponseEntity<Vehicle> search(@PathVariable Long vehicleId){
-        return vehicleRepository.findById(vehicleId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<VehicleModel> search(@PathVariable Long vehicleId){
+        return vehicleRepository.findById(vehicleId)
+                .map(vehicle -> {
+                    var vehicleModel = new VehicleModel();
+                    vehicleModel.setId(vehicle.getId());
+                    vehicleModel.setNameOwner(vehicle.getOwner().getName());
+                    vehicleModel.setBrand(vehicle.getBrand());
+                    vehicleModel.setModel(vehicle.getModel());
+                    vehicleModel.setPlate(vehicle.getPlate());
+                    vehicleModel.setStatus(vehicle.getStatus());
+                    vehicleModel.setDateRegister(vehicle.getDateRegister());
+                    vehicleModel.setDateSeizure(vehicle.getDateSeizure());
+                    return vehicleModel;
+                })
+                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
