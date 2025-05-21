@@ -1,5 +1,6 @@
 package com.project.traffic.api.controller;
 
+import com.project.traffic.api.assembler.VehicleAssembler;
 import com.project.traffic.api.model.VehicleModel;
 import com.project.traffic.domain.exception.BusinessException;
 import com.project.traffic.domain.model.Vehicle;
@@ -21,16 +22,19 @@ public class VehicleController {
 
     private final VehicleRepository vehicleRepository;
     private final RegisterVehicleService registerVehicleService;
-    private final ModelMapper modelMapper;
+//    private final ModelMapper modelMapper;
+    private final VehicleAssembler vehicleAssembler;
+
 
     @GetMapping
-    public List<Vehicle> list(){
-        return vehicleRepository.findAll();
+    public List<VehicleModel> list(){
+        return vehicleAssembler.toCollectionModel(vehicleRepository.findAll());
     }
+
     @GetMapping("/{vehicleId}")
     public ResponseEntity<VehicleModel> search(@PathVariable Long vehicleId){
         return vehicleRepository.findById(vehicleId)
-                .map(vehicle -> modelMapper.map(vehicle, VehicleModel.class))
+                .map(vehicleAssembler::toModel)
                 .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
         //        { Tudo isso deixa de existir a partir do ModelMapper
 //            var vehicleModel = new VehicleModel();
@@ -48,7 +52,7 @@ public class VehicleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Vehicle register(@Valid @RequestBody Vehicle vehicle){
-        return registerVehicleService.register(vehicle);
+    public VehicleModel register(@Valid @RequestBody Vehicle vehicle){
+        return vehicleAssembler.toModel(registerVehicleService.register(vehicle));
     }
 }
