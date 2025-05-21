@@ -1,5 +1,6 @@
 package com.project.traffic.api.model;
 
+import com.project.traffic.domain.model.OwnerSummaryModel;
 import com.project.traffic.domain.model.StatusVehicle;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import java.time.OffsetDateTime;
 public class VehicleModel {
 
     private Long id;
-    private String nameOwner;
+    private OwnerSummaryModel owner;
     private String brand;
     private String model;
     private String numPlate;
