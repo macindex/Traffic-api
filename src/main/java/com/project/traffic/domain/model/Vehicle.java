@@ -36,7 +36,7 @@ public class Vehicle {
     @NotBlank
     private String model;
     @NotBlank
-    @Pattern(regexp = "[A-Z]{3}[0-9]{4}[0-9A-Z][0-9]{2}")
+    @Pattern(regexp = "[A-Z]{3}[0-9][0-9A-Z][0-9]{2}")
     private String plate;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
