@@ -18,32 +18,23 @@ import java.net.URI;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final MessageSource messageSource;
-
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request){
-
-        ProblemDetail problemDetail = ProblemDetail.forStatus(status);
-        problemDetail.setTitle("One or more fields are invalid!");
-        problemDetail.setType(URI.create("http://algatraffic.com/errors/invalid-fields"));
-
-//        ex.getBindingResult().getAllErrors().stream().forEach(objectError -> System.out.println(((FieldError) objectError).getField() + " - " + objectError.getDefaultMessage()));
-        Map<String, String> fields = ex.getBindingResult().getAllErrors()
-                .stream()
-                .collect(Collectors.toMap(objectError -> ((FieldError) objectError).getField(),
-                        objectError -> messageSource.getMessage(objectError, LocaleContextHolder.getLocale())));
-
-        problemDetail.setProperty("Fields", fields);
-
-        return handleExceptionInternal(ex, problemDetail, headers, status, request);
-    }
+        protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                      HttpHeaders headers, HttpStatusCode status, WebRequest request){
+            ProblemDetail problemDetail = ProblemDetail.forStatus(status);
+            problemDetail.setTitle("One or more fields are invalid!");
+            problemDetail.setType(URI.create("http://traffic-api/error"));
 
 
-    @ExceptionHandler(BusinessException.class)
+            return handleExceptionInternal(ex, problemDetail, headers, status, request);
+
+        }
+
+
+
+        @ExceptionHandler(BusinessException.class)
     public ProblemDetail handleBusiness(BusinessException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setType(URI.create("http://algatraffic.com/errors/business-rule"));
