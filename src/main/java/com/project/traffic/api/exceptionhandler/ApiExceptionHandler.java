@@ -8,6 +8,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,8 +20,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
+@AllArgsConstructor
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private final MessageSource messageSource;
+
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatusCode status, WebRequest request){
         ProblemDetail problemDetail = ProblemDetail.forStatus(status);
@@ -33,7 +38,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .map(error -> (FieldError) error)
                 .collect(Collectors.toMap(
                         FieldError::getField,
-                        FieldError::getDefaultMessage
+                        fieldError -> messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())
                 ));
 
         problemDetail.setProperty("fields", fields);
