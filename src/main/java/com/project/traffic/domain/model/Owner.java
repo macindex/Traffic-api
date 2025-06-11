@@ -2,6 +2,7 @@ package com.project.traffic.domain.model;
 
 import com.project.traffic.domain.validation.ValidationGroups;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -24,7 +25,8 @@ public class Owner {
     @NotBlank
     private String name;
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 60)
+    @Email
     private String mail;
 
     @Column(name = "celphone")

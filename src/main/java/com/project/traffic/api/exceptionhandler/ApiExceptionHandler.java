@@ -21,25 +21,27 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-        protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                      HttpHeaders headers, HttpStatusCode status, WebRequest request){
-            ProblemDetail problemDetail = ProblemDetail.forStatus(status);
-            problemDetail.setTitle("One or more fields are invalid!");
-            problemDetail.setType(URI.create("http://traffic-api/error"));
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers, HttpStatusCode status, WebRequest request){
+        ProblemDetail problemDetail = ProblemDetail.forStatus(status);
+        problemDetail.setTitle("One or more fields are invalid!");
+        problemDetail.setType(URI.create("http://traffic-api/error"));
 
+        Map<String, String> fields = ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(error -> (FieldError) error)
+                .collect(Collectors.toMap(
+                        FieldError::getField,
+                        FieldError::getDefaultMessage
+                ));
 
-            return handleExceptionInternal(ex, problemDetail, headers, status, request);
+        problemDetail.setProperty("fields", fields);
 
-        }
+        return handleExceptionInternal(ex, problemDetail, headers, status, request);
 
-
-
-        @ExceptionHandler(BusinessException.class)
-    public ProblemDetail handleBusiness(BusinessException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        problemDetail.setType(URI.create("http://algatraffic.com/errors/business-rule"));
-        return problemDetail;
     }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ProblemDetail handleDataIntegrity(DataIntegrityViolationException e){
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
