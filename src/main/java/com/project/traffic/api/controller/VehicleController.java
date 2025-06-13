@@ -3,6 +3,7 @@ package com.project.traffic.api.controller;
 import com.project.traffic.api.assembler.VehicleAssembler;
 import com.project.traffic.api.model.VehicleModel;
 import com.project.traffic.domain.exception.BusinessException;
+import com.project.traffic.domain.model.OwnerSummaryModel;
 import com.project.traffic.domain.model.Vehicle;
 import com.project.traffic.domain.repository.VehicleRepository;
 import com.project.traffic.domain.service.RegisterVehicleService;
@@ -22,7 +23,7 @@ public class VehicleController {
 
     private final VehicleRepository vehicleRepository;
     private final RegisterVehicleService registerVehicleService;
-//    private final ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private final VehicleAssembler vehicleAssembler;
 
 
@@ -31,24 +32,36 @@ public class VehicleController {
         return vehicleAssembler.toCollectionModel(vehicleRepository.findAll());
     }
 
+//    @GetMapping("/{vehicleId}")
+//    public ResponseEntity<VehicleModel> search(@PathVariable Long vehicleId){
+//        return vehicleRepository.findById(vehicleId)
+//                .map(vehicle -> {
+//                    var vehicleModel = new VehicleModel();
+//                    vehicleModel.setId(vehicle.getId());
+//                    vehicleModel.setOwner(vehicle.getOwner().getName());
+//                    vehicleModel.setNumPlate(vehicle.getPlate());
+//                    vehicleModel.setModel(vehicle.getModel());
+//                    vehicleModel.setStatus(vehicle.getStatus());
+//                    vehicleModel.setDateSeizure(vehicle.getDateSeizure());
+//                    vehicleModel.setDateRegister(vehicle.getDateRegister());
+//
+//                }).map();
+//    } Este método foi criado antes do DTO VehicleModel
+
     @GetMapping("/{vehicleId}")
     public ResponseEntity<VehicleModel> search(@PathVariable Long vehicleId){
         return vehicleRepository.findById(vehicleId)
-                .map(vehicleAssembler::toModel)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-        //        { Tudo isso deixa de existir a partir do ModelMapper
-//            var vehicleModel = new VehicleModel();
-//            vehicleModel.setId(vehicle.getId());
-//            vehicleModel.setNameOwner(vehicle.getOwner().getName());
-//            vehicleModel.setBrand(vehicle.getBrand());
-//            vehicleModel.setModel(vehicle.getModel());
-//            vehicleModel.setPlate(vehicle.getPlate());
-//            vehicleModel.setStatus(vehicle.getStatus());
-//            vehicleModel.setDateRegister(vehicle.getDateRegister());
-//            vehicleModel.setDateSeizure(vehicle.getDateSeizure());
-//            return vehicleModel;
-//        }
+                .map(vehicle -> modelMapper.map(vehicle, VehicleModel.class))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
+
+//    @GetMapping("/{vehicleId}")
+//    public ResponseEntity<VehicleModel> search(@PathVariable Long vehicleId){
+//        return vehicleRepository.findById(vehicleId)
+//                .map(vehicleAssembler::toModel)
+//                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
