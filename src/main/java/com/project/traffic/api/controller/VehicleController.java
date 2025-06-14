@@ -23,7 +23,7 @@ public class VehicleController {
 
     private final VehicleRepository vehicleRepository;
     private final RegisterVehicleService registerVehicleService;
-    private final ModelMapper modelMapper;
+//    private final ModelMapper modelMapper;
     private final VehicleAssembler vehicleAssembler;
 
 
@@ -48,20 +48,20 @@ public class VehicleController {
 //                }).map();
 //    } Este método foi criado antes do DTO VehicleModel
 
-    @GetMapping("/{vehicleId}")
-    public ResponseEntity<VehicleModel> search(@PathVariable Long vehicleId){
-        return vehicleRepository.findById(vehicleId)
-                .map(vehicle -> modelMapper.map(vehicle, VehicleModel.class))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
 //    @GetMapping("/{vehicleId}")
 //    public ResponseEntity<VehicleModel> search(@PathVariable Long vehicleId){
 //        return vehicleRepository.findById(vehicleId)
-//                .map(vehicleAssembler::toModel)
-//                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+//                .map(vehicle -> modelMapper.map(vehicle, VehicleModel.class))
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
 //    }
+
+    @GetMapping("/{vehicleId}")
+    public ResponseEntity<VehicleModel> search(@PathVariable Long vehicleId){
+        return vehicleRepository.findById(vehicleId)
+                .map(vehicleAssembler::toModel)
+                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
