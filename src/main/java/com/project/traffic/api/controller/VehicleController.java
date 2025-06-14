@@ -2,6 +2,7 @@ package com.project.traffic.api.controller;
 
 import com.project.traffic.api.assembler.VehicleAssembler;
 import com.project.traffic.api.model.VehicleModel;
+import com.project.traffic.api.model.input.VehicleInput;
 import com.project.traffic.domain.exception.BusinessException;
 import com.project.traffic.domain.model.OwnerSummaryModel;
 import com.project.traffic.domain.model.Vehicle;
@@ -65,7 +66,11 @@ public class VehicleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VehicleModel register(@Valid @RequestBody Vehicle vehicle){
-        return vehicleAssembler.toModel(registerVehicleService.register(vehicle));
+    public VehicleModel register(@Valid @RequestBody VehicleInput vehicleInput){
+//       (before) return vehicleAssembler.toModel(registerVehicleService.register(vehicleInput));
+        Vehicle newVehicle = vehicleAssembler.toEntity(vehicleInput);
+        Vehicle vehicleRegistered = registerVehicleService.register(newVehicle);
+
+        return vehicleAssembler.toModel(vehicleRegistered);
     }
 }

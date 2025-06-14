@@ -1,6 +1,7 @@
 package com.project.traffic.api.assembler;
 
 import com.project.traffic.api.model.VehicleModel;
+import com.project.traffic.api.model.input.VehicleInput;
 import com.project.traffic.domain.model.Vehicle;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,10 @@ import java.util.List;
 public class VehicleAssembler {
 
     private final ModelMapper modelMapper;
+
+    public Vehicle toEntity(VehicleInput vehicleInput){
+        return modelMapper.map(vehicleInput, Vehicle.class);
+    }
 
     public VehicleModel toModel(Vehicle vehicle){
         return modelMapper.map(vehicle, VehicleModel.class);
