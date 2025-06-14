@@ -25,25 +25,14 @@ public class Vehicle {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Valid
-    @ConvertGroup(from = Default.class, to = ValidationGroups.OwnerId.class)
     @ManyToOne
-//    @JoinColumn(name = "owner_id")
-    @NotNull
     private Owner owner;
-    @NotBlank
     private String brand;
-    @NotBlank
     private String model;
-    @NotBlank
-    @Pattern(regexp = "[A-Z]{3}[0-9][0-9A-Z][0-9]{2}")
     private String plate;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     private StatusVehicle status;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OffsetDateTime dateRegister;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OffsetDateTime dateSeizure;
 }
