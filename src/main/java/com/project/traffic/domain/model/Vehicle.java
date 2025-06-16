@@ -15,6 +15,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,4 +37,7 @@ public class Vehicle {
     private StatusVehicle status;
     private OffsetDateTime dateRegister;
     private OffsetDateTime dateSeizure;
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<Assessment> assessments = new ArrayList<>();
 }
