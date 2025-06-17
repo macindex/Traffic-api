@@ -19,10 +19,9 @@ public class Assessment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @Joi
     private Vehicle vehicle;
 
     private String description;
     private BigDecimal fineAmount;
-    private OffsetDateTime dateOccurance;
+    private OffsetDateTime dateOccurrence;
 }
