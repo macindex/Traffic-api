@@ -4,10 +4,8 @@ import com.project.traffic.domain.exception.BusinessException;
 import com.project.traffic.domain.model.Owner;
 import com.project.traffic.domain.model.StatusVehicle;
 import com.project.traffic.domain.model.Vehicle;
-import com.project.traffic.domain.repository.OwnerRepository;
 import com.project.traffic.domain.repository.VehicleRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +18,10 @@ public class RegisterVehicleService {
 
     private final VehicleRepository vehicleRepository;
     private final RegisterOwnerService registerOwnerService;
+
+    public Vehicle search(Long vehicleId){
+        return vehicleRepository.findById(vehicleId).orElseThrow(() -> new BusinessException("Vehicle not found!"));
+    }
 
 //    @Autowired
 //    public RegisterVehicleService(VehicleRepository vehicleRepository) {

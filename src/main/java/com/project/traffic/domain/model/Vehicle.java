@@ -40,4 +40,11 @@ public class Vehicle {
 
     @OneToMany(mappedBy = "vehicle")
     private List<Assessment> assessments = new ArrayList<>();
+
+    public Assessment addAssessment(Assessment assessment){
+        assessment.setDateOccurance(OffsetDateTime.now());
+        assessment.setVehicle(this);
+        getAssessments().add(assessment);
+        return assessment;
+    }
 }
