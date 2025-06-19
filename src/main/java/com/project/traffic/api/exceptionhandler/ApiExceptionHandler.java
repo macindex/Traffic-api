@@ -1,6 +1,7 @@
 package com.project.traffic.api.exceptionhandler;
 
 import com.project.traffic.domain.exception.BusinessException;
+import com.project.traffic.domain.exception.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -60,6 +61,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setTitle(e.getMessage());
         problemDetail.setType(URI.create("http://algatraffic.com/errors/rule-business"));
+
+        return problemDetail;
+    }
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ProblemDetail handleEntityNotFound(EntityNotFoundException e){
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle(e.getMessage());
+        problemDetail.setType(URI.create("http://algatraffic.com/errors/not-found"));
 
         return problemDetail;
     }

@@ -1,6 +1,7 @@
 package com.project.traffic.domain.service;
 
 import com.project.traffic.domain.exception.BusinessException;
+import com.project.traffic.domain.exception.EntityNotFoundException;
 import com.project.traffic.domain.model.Owner;
 import com.project.traffic.domain.model.StatusVehicle;
 import com.project.traffic.domain.model.Vehicle;
@@ -20,7 +21,7 @@ public class RegisterVehicleService {
     private final RegisterOwnerService registerOwnerService;
 
     public Vehicle search(Long vehicleId){
-        return vehicleRepository.findById(vehicleId).orElseThrow(() -> new BusinessException("Vehicle not found!"));
+        return vehicleRepository.findById(vehicleId).orElseThrow(() -> new EntityNotFoundException("Vehicle not found!"));
     }
 
 //    @Autowired
