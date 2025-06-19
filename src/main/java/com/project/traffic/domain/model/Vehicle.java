@@ -38,11 +38,11 @@ public class Vehicle {
     private OffsetDateTime dateRegister;
     private OffsetDateTime dateSeizure;
 
-    @OneToMany(mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
     private List<Assessment> assessments = new ArrayList<>();
 
     public Assessment addAssessment(Assessment assessment){
-        assessment.setDateOccurance(OffsetDateTime.now());
+        assessment.setDateOccurrence(OffsetDateTime.now());
         assessment.setVehicle(this);
         getAssessments().add(assessment);
         return assessment;

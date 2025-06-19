@@ -3,7 +3,7 @@ create table assessment (
 	vehicle_id bigint not null,
 	description text not null,
 	fine_amount decimal(10,2) not null,
-	date_occurance datetime not null,
+	date_occurrence datetime not null,
 	primary key (id)
 );
 
