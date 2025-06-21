@@ -4,11 +4,15 @@ import com.project.traffic.api.assembler.AssessmentAssembler;
 import com.project.traffic.api.model.AssessmentModel;
 import com.project.traffic.api.model.input.AssessmentInput;
 import com.project.traffic.domain.model.Assessment;
+import com.project.traffic.domain.model.Vehicle;
 import com.project.traffic.domain.service.RegisterAssessmentService;
+import com.project.traffic.domain.service.RegisterVehicleService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/vehicles/{vehicleId}/assessments")
 @AllArgsConstructor
@@ -17,6 +21,7 @@ public class AssessmentController {
 
     private final AssessmentAssembler assessmentAssembler;
     private final RegisterAssessmentService registerAssessmentService;
+    private final RegisterVehicleService registerVehicleService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -25,6 +30,11 @@ public class AssessmentController {
         Assessment assessmentRegistered = registerAssessmentService.register(vehicleId, newAssessment);
 
         return assessmentAssembler.toModel(assessmentRegistered);
+    }
+    @GetMapping
+    public List<AssessmentModel> list(@PathVariable Long vehicleId){
+        Vehicle vehicle = registerVehicleService.search(vehicleId);
+        return assessmentAssembler.toCollectionModel(vehicle.getAssessments());
     }
 
 }
