@@ -1,6 +1,7 @@
 package com.project.traffic.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.traffic.domain.exception.BusinessException;
 import com.project.traffic.domain.validation.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -46,5 +47,18 @@ public class Vehicle {
         assessment.setVehicle(this);
         getAssessments().add(assessment);
         return assessment;
+    }
+    public void seize(){
+        if (itsBeenSeized()){
+            throw new BusinessException("The vehicle is already impounded");
+        }
+        setStatus(StatusVehicle.SEIZED);
+        setDataSeizure(OffsetDateTime.now());
+        //if (StatusVehicle.SEIZED.equals(getStatus())){
+        //} FICARIA DESTA FORMA
+    }
+
+    public boolean itsBeenSeized() {
+        return StatusVehicle.SEIZED.equals(getStatus());
     }
 }
