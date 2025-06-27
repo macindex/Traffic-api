@@ -15,4 +15,10 @@ public class SeizureVehicleService {
         Vehicle vehicle = registerVehicleService.search(vehicleId);
         vehicle.seize();
     }
+    @Transactional
+    public void removeSeizure(Long vehicleId){
+        Vehicle vehicle = registerVehicleService.search(vehicleId);
+        vehicle.removeSeizure();
+    }
+
 }

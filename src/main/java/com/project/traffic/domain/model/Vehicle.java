@@ -53,12 +53,20 @@ public class Vehicle {
             throw new BusinessException("The vehicle is already impounded");
         }
         setStatus(StatusVehicle.SEIZED);
-        setDataSeizure(OffsetDateTime.now());
-        //if (StatusVehicle.SEIZED.equals(getStatus())){
-        //} FICARIA DESTA FORMA
+        setDateSeizure(OffsetDateTime.now());
+    }
+    public void removeSeizure(){
+        if(notSeized()){
+            throw new BusinessException("Vehicle has not been seized");
+        }
+        setStatus(StatusVehicle.REGULAR);
+        setDateSeizure(null);
     }
 
     public boolean itsBeenSeized() {
         return StatusVehicle.SEIZED.equals(getStatus());
+    }
+    public boolean notSeized(){
+        return !itsBeenSeized();
     }
 }
