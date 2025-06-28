@@ -8,6 +8,7 @@ import com.project.traffic.domain.model.OwnerSummaryModel;
 import com.project.traffic.domain.model.Vehicle;
 import com.project.traffic.domain.repository.VehicleRepository;
 import com.project.traffic.domain.service.RegisterVehicleService;
+import com.project.traffic.domain.service.SeizureVehicleService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,6 +27,7 @@ public class VehicleController {
     private final RegisterVehicleService registerVehicleService;
 //    private final ModelMapper modelMapper;
     private final VehicleAssembler vehicleAssembler;
+    private final SeizureVehicleService seizureVehicleService;
 
 
     @GetMapping
@@ -72,5 +74,16 @@ public class VehicleController {
         Vehicle vehicleRegistered = registerVehicleService.register(newVehicle);
 
         return vehicleAssembler.toModel(vehicleRegistered);
+    }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{vehicleId}/seizure")
+    public void seize(@PathVariable Long vehicleId){
+        seizureVehicleService.seize(vehicleId);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{vehicleId}/seizure")
+    public void removeSeizure(@PathVariable Long vehicleId){
+        seizureVehicleService.removeSeizure(vehicleId);
     }
 }
